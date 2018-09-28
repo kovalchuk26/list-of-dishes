@@ -25,7 +25,7 @@ export function loadDishes() {
 export function dishesLoaded(dishes) {
   return {
     type: LOAD_DISHES_SUCCESS,
-    dishes,
+    dishes: dishes.meal,
   };
 }
 

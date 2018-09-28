@@ -16,12 +16,9 @@ const initialState = fromJS({
 function appReducer(state = initialState, action) {
   switch (action.type) {
     case LOAD_DISHES:
-      return state
-        .set('loading', true)
-        .set('error', false)
-        .set('dishes', []);
+      return state.set('loading', true).set('error', false);
     case LOAD_DISHES_SUCCESS:
-      return state.set('dishes', action.dishes.meal).set('loading', false);
+      return state.set('dishes', action.dishes).set('loading', false);
     case LOAD_DISHES_ERROR:
       return state.set('error', action.error).set('loading', false);
     default:
