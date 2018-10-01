@@ -14,17 +14,15 @@ import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import { compose } from 'redux';
 import { createStructuredSelector } from 'reselect';
-import { Layout, Menu, Popover, Icon, Spin } from 'antd';
+import { Layout, Menu, Icon, Spin } from 'antd';
 import {
   makeSelectDishes,
   makeSelectLoading,
   makeSelectError,
 } from 'containers/App/selectors';
-// import injectReducer from 'utils/injectReducer';
-// import reducer from './reducer';
 import injectSaga from 'utils/injectSaga';
 import saga from './saga';
-import { loadDishes } from '../App/actions';
+import { loadDishes, setCurrentDish } from '../App/actions';
 import DishesList from '../../components/DishesList';
 
 const { Header, Footer, Content } = Layout;
@@ -54,7 +52,10 @@ export class HomePage extends React.PureComponent {
         ) : (
           <Content style={{ padding: '0 50px' }}>
             <Layout style={{ padding: '24px 0', background: '#fff' }}>
-              <DishesList dishes={this.props.dishes} />
+              <DishesList
+                dishes={this.props.dishes}
+                setCurrentDish={this.props.setCurrentDish}
+              />
               <Content style={{ padding: '0 24px', minHeight: 280 }}>
                 Options of current dish
               </Content>
@@ -71,6 +72,7 @@ export class HomePage extends React.PureComponent {
 
 HomePage.propTypes = {
   loadDishes: PropTypes.func,
+  setCurrentDish: PropTypes.func,
   dishes: PropTypes.oneOfType([PropTypes.array, PropTypes.object]),
   loading: PropTypes.bool,
 };
@@ -80,6 +82,11 @@ export function mapDispatchToProps(dispatch) {
     loadDishes: event => {
       if (event !== undefined && event.preventDefault) event.preventDefault();
       dispatch(loadDishes());
+    },
+    setCurrentDish: ({ key, domEvent }) => {
+      if (domEvent !== undefined && domEvent.preventDefault)
+        domEvent.preventDefault();
+      dispatch(setCurrentDish(key));
     },
   };
 }
@@ -95,7 +102,6 @@ const withConnect = connect(
   mapDispatchToProps,
 );
 
-// const withReducer = injectReducer({ key: 'home', reducer });
 const withSaga = injectSaga({ key: 'home', saga });
 
 export default compose(

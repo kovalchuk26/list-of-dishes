@@ -1,8 +1,4 @@
-import {
-  LOAD_DISHES,
-  LOAD_DISHES_SUCCESS,
-  LOAD_DISHES_ERROR,
-} from './constants';
+import * as actionsTypes from './constants';
 
 /**
  * Load the dishes, this action starts the request saga
@@ -11,7 +7,7 @@ import {
  */
 export function loadDishes() {
   return {
-    type: LOAD_DISHES,
+    type: actionsTypes.LOAD_DISHES,
   };
 }
 
@@ -24,8 +20,8 @@ export function loadDishes() {
  */
 export function dishesLoaded(dishes) {
   return {
-    type: LOAD_DISHES_SUCCESS,
-    dishes: dishes.meal,
+    type: actionsTypes.LOAD_DISHES_SUCCESS,
+    dishes,
   };
 }
 
@@ -38,7 +34,42 @@ export function dishesLoaded(dishes) {
  */
 export function dishesLoadingError(error) {
   return {
-    type: LOAD_DISHES_ERROR,
+    type: actionsTypes.LOAD_DISHES_ERROR,
     error,
+  };
+}
+
+export function setCurrentDish(dishId) {
+  return {
+    type: actionsTypes.SET_CURRENT_DISH,
+    dishId,
+  };
+}
+
+export function editType(dishesType) {
+  return {
+    type: actionsTypes.EDIT_TYPE,
+    dishesType,
+  };
+}
+
+export function editSubtype(dishesType) {
+  return {
+    type: actionsTypes.EDIT_SUBTYPE,
+    dishesType,
+  };
+}
+
+export function addSubtype(dishesSubtype) {
+  return {
+    type: actionsTypes.ADD_SUBTYPE,
+    dishesSubtype,
+  };
+}
+
+export function addDish(dish) {
+  return {
+    type: actionsTypes.ADD_DISH,
+    dish,
   };
 }
