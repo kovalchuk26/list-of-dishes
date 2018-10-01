@@ -17,6 +17,9 @@ const makeSelectError = () =>
 const makeSelectDishes = () =>
   createSelector(selectGlobal, globalState => globalState.get('dishes'));
 
+const makeSelectSelectedDish = () =>
+  createSelector(selectGlobal, globalState => globalState.get('selectedDish'));
+
 const makeSelectLocation = () =>
   createSelector(selectRoute, routeState => routeState.get('location').toJS());
 
@@ -26,4 +29,5 @@ export {
   makeSelectError,
   makeSelectDishes,
   makeSelectLocation,
+  makeSelectSelectedDish
 };

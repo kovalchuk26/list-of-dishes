@@ -5,7 +5,7 @@ import { dishesLoaded, dishesLoadingError } from 'containers/App/actions';
 import request from 'utils/request';
 
 export function* getDishes() {
-  const requestURL = 'https://api.myjson.com/bins/1e8odc';
+  const requestURL = 'https://api.myjson.com/bins/i27w8';
 
   try {
     // Call our request helper (see 'utils/request')

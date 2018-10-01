@@ -7,8 +7,10 @@ const initialState = fromJS({
   loading: false,
   error: false,
   dishes: {},
-  currentDish: null,
+  selectedDish: null,
+  editableType: null
 });
+
 
 function appReducer(state = initialState, action) {
   switch (action.type) {
@@ -18,10 +20,10 @@ function appReducer(state = initialState, action) {
       return state.set('dishes', action.dishes).set('loading', false);
     case actionsTypes.LOAD_DISHES_ERROR:
       return state.set('error', action.error).set('loading', false);
-    case actionsTypes.SET_CURRENT_DISH:
+    case actionsTypes.SELECT_DISH:
       return state.set(
-        'currentDish',
-        state.get(['dishes', 'dishes', 'byId', action.dishId]),
+        'selectedDish',
+        state.get('dishes').dishes.byId[action.dishId]
       );
     default:
       return state;

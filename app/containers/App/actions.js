@@ -39,9 +39,9 @@ export function dishesLoadingError(error) {
   };
 }
 
-export function setCurrentDish(dishId) {
+export function selectDish(dishId) {
   return {
-    type: actionsTypes.SET_CURRENT_DISH,
+    type: actionsTypes.SELECT_DISH,
     dishId,
   };
 }

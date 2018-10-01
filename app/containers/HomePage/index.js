@@ -19,11 +19,13 @@ import {
   makeSelectDishes,
   makeSelectLoading,
   makeSelectError,
+  makeSelectSelectedDish,
 } from 'containers/App/selectors';
 import injectSaga from 'utils/injectSaga';
 import saga from './saga';
-import { loadDishes, setCurrentDish } from '../App/actions';
+import { loadDishes, selectDish } from '../App/actions';
 import DishesList from '../../components/DishesList';
+import DishDetails from '../../components/DishDetails';
 
 const { Header, Footer, Content } = Layout;
 const antIcon = <Icon type="loading" style={{ fontSize: 24 }} spin />;
@@ -57,7 +59,8 @@ export class HomePage extends React.PureComponent {
                 setCurrentDish={this.props.setCurrentDish}
               />
               <Content style={{ padding: '0 24px', minHeight: 280 }}>
-                Options of current dish
+                <h3>Selected dish</h3>
+                {this.props.selectedDish ? <DishDetails details={this.props.selectedDish}/> : 'Select favorite dish'}
               </Content>
             </Layout>
           </Content>
@@ -75,6 +78,7 @@ HomePage.propTypes = {
   setCurrentDish: PropTypes.func,
   dishes: PropTypes.oneOfType([PropTypes.array, PropTypes.object]),
   loading: PropTypes.bool,
+  selectedDish: PropTypes.object,
 };
 
 export function mapDispatchToProps(dispatch) {
@@ -86,7 +90,7 @@ export function mapDispatchToProps(dispatch) {
     setCurrentDish: ({ key, domEvent }) => {
       if (domEvent !== undefined && domEvent.preventDefault)
         domEvent.preventDefault();
-      dispatch(setCurrentDish(key));
+      dispatch(selectDish(key));
     },
   };
 }
@@ -95,6 +99,7 @@ const mapStateToProps = createStructuredSelector({
   dishes: makeSelectDishes(),
   loading: makeSelectLoading(),
   error: makeSelectError(),
+  selectedDish: makeSelectSelectedDish(),
 });
 
 const withConnect = connect(
