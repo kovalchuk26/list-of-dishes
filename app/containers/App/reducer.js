@@ -8,9 +8,9 @@ const initialState = fromJS({
   error: false,
   dishes: {},
   selectedDish: null,
-  editableType: null
+  editableType: null,
+  visibleModal: false,
 });
-
 
 function appReducer(state = initialState, action) {
   switch (action.type) {
@@ -21,10 +21,11 @@ function appReducer(state = initialState, action) {
     case actionsTypes.LOAD_DISHES_ERROR:
       return state.set('error', action.error).set('loading', false);
     case actionsTypes.SELECT_DISH:
-      return state.set(
-        'selectedDish',
-        state.get('dishes').dishes.byId[action.dishId]
-      );
+      return state.set('selectedDish', {
+        ...state.get('dishes').dishes.byId[action.dishId],
+      });
+    case actionsTypes.CHANGE_VISIBLE_MODAL:
+      return state.set('visibleModal', !state.get('visibleModal'));
     default:
       return state;
   }

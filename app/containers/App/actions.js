@@ -39,6 +39,12 @@ export function dishesLoadingError(error) {
   };
 }
 
+export function changeVisibleModal() {
+  return {
+    type: actionsTypes.CHANGE_VISIBLE_MODAL,
+  };
+}
+
 export function selectDish(dishId) {
   return {
     type: actionsTypes.SELECT_DISH,

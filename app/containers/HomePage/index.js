@@ -20,10 +20,11 @@ import {
   makeSelectLoading,
   makeSelectError,
   makeSelectSelectedDish,
+  makeSelectVisibleModal,
 } from 'containers/App/selectors';
 import injectSaga from 'utils/injectSaga';
 import saga from './saga';
-import { loadDishes, selectDish } from '../App/actions';
+import { loadDishes, selectDish, changeVisibleModal } from '../App/actions';
 import DishesList from '../../components/DishesList';
 import DishDetails from '../../components/DishDetails';
 
@@ -56,11 +57,20 @@ export class HomePage extends React.PureComponent {
             <Layout style={{ padding: '24px 0', background: '#fff' }}>
               <DishesList
                 dishes={this.props.dishes}
+                visibleModal={this.props.visibleModal}
                 setCurrentDish={this.props.setCurrentDish}
+                changeVisibleModal={this.props.changeVisibleModal}
               />
               <Content style={{ padding: '0 24px', minHeight: 280 }}>
                 <h3>Selected dish</h3>
-                {this.props.selectedDish ? <DishDetails details={this.props.selectedDish}/> : 'Select favorite dish'}
+                {this.props.selectedDish ? (
+                  <DishDetails
+                    details={this.props.selectedDish}
+                    fillers={this.props.dishes.fillers}
+                  />
+                ) : (
+                  'Select favorite dish'
+                )}
               </Content>
             </Layout>
           </Content>
@@ -76,9 +86,11 @@ export class HomePage extends React.PureComponent {
 HomePage.propTypes = {
   loadDishes: PropTypes.func,
   setCurrentDish: PropTypes.func,
+  changeVisibleModal: PropTypes.func,
   dishes: PropTypes.oneOfType([PropTypes.array, PropTypes.object]),
   loading: PropTypes.bool,
   selectedDish: PropTypes.object,
+  visibleModal: PropTypes.bool,
 };
 
 export function mapDispatchToProps(dispatch) {
@@ -92,6 +104,9 @@ export function mapDispatchToProps(dispatch) {
         domEvent.preventDefault();
       dispatch(selectDish(key));
     },
+    changeVisibleModal: () => {
+      dispatch(changeVisibleModal());
+    },
   };
 }
 
@@ -100,6 +115,7 @@ const mapStateToProps = createStructuredSelector({
   loading: makeSelectLoading(),
   error: makeSelectError(),
   selectedDish: makeSelectSelectedDish(),
+  visibleModal: makeSelectVisibleModal(),
 });
 
 const withConnect = connect(

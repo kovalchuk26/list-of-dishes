@@ -6,3 +6,4 @@ export const EDIT_TYPE = 'dishes/Home/EDIT_TYPE';
 export const EDIT_SUBTYPE = 'dishes/Home/EDIT_SUBTYPE';
 export const ADD_SUBTYPE = 'dishes/Home/ADD_SUBTYPE';
 export const ADD_DISH = 'dishes/Home/ADD_DISH';
+export const CHANGE_VISIBLE_MODAL = 'dishes/App/CHANGE_VISIBLE_MODAL';
